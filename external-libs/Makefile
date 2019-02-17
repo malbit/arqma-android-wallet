@@ -1,23 +1,10 @@
-#.PHONY: f-droid-sign f-droid-clean \
-#build-external-libs use-prebuilt-external-libs \
-#toolchain openssl boost wownero collect \
-#clean-external-libs \
-#f-droid-sign f-droid-clean \
-#gradle-release gradle-build gradle-sign gradle-clean \
-#apk-install remove-exif
+all: arqma
 
-#all: build-external-libs
+arqma: toolchain libsodium openssl boost arqma_dl openssl_sysroot
+	script/arqma-build.sh
 
-#build-external-libs: clean-external-libs collect
-
-all: monero
-
-monero: toolchain libsodium openssl boost monero_dl openssl_sysroot
-	script/monero-build.sh
-
-monero_dl:
-	script/monero-fetch.sh
-#	script/monero-patch.sh
+arqma_dl:
+	script/arqma-fetch.sh
 
 toolchain:
 	script/toolchain-build.sh
@@ -51,11 +38,11 @@ clean:
 	script/clean.sh
 
 distclean: clean
-	find monero    -type f -a ! -name ".gitignore" -a ! -name "wallet2_api.h" -exec rm {} \;
+	find arqma     -type f -a ! -name ".gitignore" -a ! -name "wallet2_api.h" -exec rm {} \;
 	find boost     -type f -a ! -name ".gitignore" -exec rm {} \;
 	find libsodium -type f -a ! -name ".gitignore" -exec rm {} \;
 	find openssl   -type f -a ! -name ".gitignore" -exec rm {} \;
 
-archive: libsodium openssl boost monero
+archive: libsodium openssl boost arqma
 	echo "Packing external-libs"
-	tar czfv libsodium openssl boost monero external-libs.tgz
+	tar czfv libsodium openssl boost arqma external-libs.tgz

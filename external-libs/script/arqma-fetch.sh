@@ -6,10 +6,10 @@ source script/env.sh
 
 cd $EXTERNAL_LIBS_BUILD_ROOT
 
-url="https://github.com/m2049r/monero"
-version="release-v0.13.0-monerujo"
+url="https://github.com/malbit/arqma"
+version="android"
 
-if [ ! -d "monero" ]; then
+if [ ! -d "arqma" ]; then
   git clone ${url} -b ${version}
   cd monero
   git submodule update --recursive --init
